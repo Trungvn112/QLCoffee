@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8cd40d74d068419ebfaef5c64bb929c7" Name="Diagram1">
+        <EntityTypeShape EntityType="QuanLyCoffeModel.DANHSACHBAN" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCoffeModel.GOIMON" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCoffeModel.HOADON" Width="1.5" PointX="8.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCoffeModel.LOAIMON" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCoffeModel.MONAN" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCoffeModel.NHANVIEN" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCoffeModel.THONGKEDOANHTHU" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <AssociationConnector Association="QuanLyCoffeModel.FK_GOIMON_DANHSACHBAN" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyCoffeModel.FK_HOADON_DANHSACHBAN" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyCoffeModel.FK_GOIMON_MONAN1" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyCoffeModel.FK_HOADON_MONAN" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyCoffeModel.FK_HOADON_NHANVIEN" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyCoffeModel.FK_MONAN_LOAIMON" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

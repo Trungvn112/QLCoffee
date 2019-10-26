@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QuanLyCoffeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DANHSACHBAN">
+    <Key>
+      <PropertyRef Name="MaBan" />
+    </Key>
+    <Property Name="MaBan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenBan" Type="nvarchar" MaxLength="50" />
+    <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="GOIMON">
+    <Key>
+      <PropertyRef Name="MaGoiMon" />
+    </Key>
+    <Property Name="MaGoiMon" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaBan" Type="int" Nullable="false" />
+    <Property Name="MaMon" Type="int" Nullable="false" />
+    <Property Name="SoLuong" Type="int" />
+    <Property Name="ThanhTien" Type="decimal" Precision="20" Scale="0" StoreGeneratedPattern="Computed" />
+    <Property Name="DonGia" Type="decimal" Precision="9" Scale="0" />
+  </EntityType>
+  <EntityType Name="HOADON">
+    <Key>
+      <PropertyRef Name="MaHD" />
+    </Key>
+    <Property Name="MaHD" Type="int" Nullable="false" />
+    <Property Name="MaBan" Type="int" />
+    <Property Name="MaMon" Type="int" />
+    <Property Name="MaNV" Type="int" />
+    <Property Name="NgayThanhToan" Type="datetime" />
+    <Property Name="TongTien" Type="money" />
+    <Property Name="SoLuong" Type="int" />
+    <Property Name="DonGia" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="ThanhTien" Type="decimal" Precision="20" Scale="2" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="LOAIMON">
+    <Key>
+      <PropertyRef Name="MaLoaiMon" />
+    </Key>
+    <Property Name="MaLoaiMon" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenLoaiMon" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="MONAN">
+    <Key>
+      <PropertyRef Name="MaMon" />
+    </Key>
+    <Property Name="MaMon" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaLoaiMon" Type="int" Nullable="false" />
+    <Property Name="TenMon" Type="nvarchar" MaxLength="50" />
+    <Property Name="DonGia" Type="decimal" Precision="9" Scale="0" />
+    <Property Name="HinhAnh" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="NHANVIEN">
+    <Key>
+      <PropertyRef Name="MaNV" />
+    </Key>
+    <Property Name="MaNV" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HoTenNV" Type="nvarchar" MaxLength="50" />
+    <Property Name="TenDN" Type="varchar" MaxLength="50" />
+    <Property Name="MatKhau" Type="varchar" MaxLength="50" />
+    <Property Name="HeThong" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="THONGKEDOANHTHU">
+    <Key>
+      <PropertyRef Name="MaTKDT" />
+    </Key>
+    <Property Name="MaTKDT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NgayThanhToan" Type="date" />
+    <Property Name="TongTien" Type="decimal" Precision="9" Scale="0" />
+  </EntityType>
+  <Association Name="FK_GOIMON_DANHSACHBAN">
+    <End Role="DANHSACHBAN" Type="Self.DANHSACHBAN" Multiplicity="1" />
+    <End Role="GOIMON" Type="Self.GOIMON" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DANHSACHBAN">
+        <PropertyRef Name="MaBan" />
+      </Principal>
+      <Dependent Role="GOIMON">
+        <PropertyRef Name="MaBan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GOIMON_MONAN1">
+    <End Role="MONAN" Type="Self.MONAN" Multiplicity="1" />
+    <End Role="GOIMON" Type="Self.GOIMON" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MONAN">
+        <PropertyRef Name="MaMon" />
+      </Principal>
+      <Dependent Role="GOIMON">
+        <PropertyRef Name="MaMon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HOADON_DANHSACHBAN">
+    <End Role="DANHSACHBAN" Type="Self.DANHSACHBAN" Multiplicity="0..1" />
+    <End Role="HOADON" Type="Self.HOADON" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DANHSACHBAN">
+        <PropertyRef Name="MaBan" />
+      </Principal>
+      <Dependent Role="HOADON">
+        <PropertyRef Name="MaBan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HOADON_MONAN">
+    <End Role="MONAN" Type="Self.MONAN" Multiplicity="0..1" />
+    <End Role="HOADON" Type="Self.HOADON" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MONAN">
+        <PropertyRef Name="MaMon" />
+      </Principal>
+      <Dependent Role="HOADON">
+        <PropertyRef Name="MaMon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HOADON_NHANVIEN">
+    <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="0..1" />
+    <End Role="HOADON" Type="Self.HOADON" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NHANVIEN">
+        <PropertyRef Name="MaNV" />
+      </Principal>
+      <Dependent Role="HOADON">
+        <PropertyRef Name="MaNV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MONAN_LOAIMON">
+    <End Role="LOAIMON" Type="Self.LOAIMON" Multiplicity="1" />
+    <End Role="MONAN" Type="Self.MONAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOAIMON">
+        <PropertyRef Name="MaLoaiMon" />
+      </Principal>
+      <Dependent Role="MONAN">
+        <PropertyRef Name="MaLoaiMon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QuanLyCoffeModelStoreContainer">
+    <EntitySet Name="DANHSACHBAN" EntityType="Self.DANHSACHBAN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GOIMON" EntityType="Self.GOIMON" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HOADON" EntityType="Self.HOADON" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LOAIMON" EntityType="Self.LOAIMON" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MONAN" EntityType="Self.MONAN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NHANVIEN" EntityType="Self.NHANVIEN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="THONGKEDOANHTHU" EntityType="Self.THONGKEDOANHTHU" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_GOIMON_DANHSACHBAN" Association="Self.FK_GOIMON_DANHSACHBAN">
+      <End Role="DANHSACHBAN" EntitySet="DANHSACHBAN" />
+      <End Role="GOIMON" EntitySet="GOIMON" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GOIMON_MONAN1" Association="Self.FK_GOIMON_MONAN1">
+      <End Role="MONAN" EntitySet="MONAN" />
+      <End Role="GOIMON" EntitySet="GOIMON" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HOADON_DANHSACHBAN" Association="Self.FK_HOADON_DANHSACHBAN">
+      <End Role="DANHSACHBAN" EntitySet="DANHSACHBAN" />
+      <End Role="HOADON" EntitySet="HOADON" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HOADON_MONAN" Association="Self.FK_HOADON_MONAN">
+      <End Role="MONAN" EntitySet="MONAN" />
+      <End Role="HOADON" EntitySet="HOADON" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HOADON_NHANVIEN" Association="Self.FK_HOADON_NHANVIEN">
+      <End Role="NHANVIEN" EntitySet="NHANVIEN" />
+      <End Role="HOADON" EntitySet="HOADON" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MONAN_LOAIMON" Association="Self.FK_MONAN_LOAIMON">
+      <End Role="LOAIMON" EntitySet="LOAIMON" />
+      <End Role="MONAN" EntitySet="MONAN" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

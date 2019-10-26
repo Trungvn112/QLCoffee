@@ -1,0 +1,577 @@
+﻿<Window x:Class="QuanLyCoffe.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLyCoffe"
+        mc:Ignorable="d"
+        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        xmlns:uc="clr-namespace:QuanLyCoffe.UserControlXAML"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        WindowState="Maximized"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        DataContext="{StaticResource MainVM}"
+        Title="Quản lý coffe" 
+        Name="mainWindow">
+
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}" 
+                                   CommandParameter="{Binding ElementName=mainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <uc:ControlBarUC Tag="{Binding Title, ElementName=mainWindow}"></uc:ControlBarUC>
+        </Grid>
+        <Grid Grid.Row="1" VerticalAlignment="Top">
+            <dragablz:TabablzControl Width="auto" Margin="-4,2,4,-1" SelectionChanged="TabablzControl_SelectionChanged_1" >
+                <dragablz:TabablzControl.InterTabController>
+                    <dragablz:InterTabController/>
+                </dragablz:TabablzControl.InterTabController>
+                <!--Thanh toán-->
+                <TabItem Header="Thanh toán">
+                    <materialDesign:Card VerticalAlignment="Top">
+                        <Grid VerticalAlignment="Top" Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                       
+                                        <TextBlock  Margin="10 10 10 10" Text="Danh sách bàn" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Blue" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                        <TextBlock Margin="10 10 10 10" Text="Thanh toán hóa đơn" Grid.Column="1" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                            <materialDesign:Card Grid.Row="1" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0" VerticalAlignment="Top" Height="700">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="600">
+                                            <ListBox VerticalAlignment="Top" HorizontalAlignment="Center" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"  ItemsSource="{Binding DANHSACHBAN, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition></RowDefinition>
+                                                                <RowDefinition></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <Button Grid.Row="0" Content="{Binding TenBan}" Height="70" Width="100">
+                                                                <Button.Background>
+                                                                    <ImageBrush ImageSource="Image/BanCoffe.png"></ImageBrush>
+                                                                </Button.Background>
+                                                            </Button>
+                                                            <TextBlock Foreground="Blue" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"   Text="{Binding TenBan}" Grid.Row="1" HorizontalAlignment="Center"></TextBlock>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                                <ListBox.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel Orientation="Horizontal"/>
+                                                    </ItemsPanelTemplate>
+                                                </ListBox.ItemsPanel>
+                                            </ListBox>
+                                        </ScrollViewer>
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                            <RowDefinition Height="auto"></RowDefinition><RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0"  Margin="0 50 50 0">
+                                            <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalAlignment="Top">
+                                                <ListView ItemsSource="{Binding GOIMON,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" HorizontalAlignment="Center">
+                                                    <ListView.ItemContainerStyle>
+                                                        <Style TargetType="{x:Type ListViewItem}"  >
+                                                            <Setter Property="Height" Value="30"/>
+                                                            <Setter Property="Background" Value="White" />
+                                                            <Setter Property="Foreground" Value="Black"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="true">
+                                                                    <Setter Property="Foreground" Value="DarkBlue" />
+                                                                    <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                                                    <Setter Property="Background">
+                                                                        <Setter.Value>
+                                                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                                                <GradientStop Color="#FFFFC704" Offset="1"/>
+                                                                                <GradientStop Color="#FFF4E057" Offset="0.5"/>
+                                                                                <GradientStop Color="#FFF4E057" Offset="0.5"/>
+                                                                            </LinearGradientBrush>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ListView.ItemContainerStyle>
+                                                    <ListView.View>
+                                                        <GridView>
+                                                            <GridViewColumn Header="Mã món" DisplayMemberBinding="{Binding MaMon}"></GridViewColumn>
+                                                            <GridViewColumn Header="Tên món" DisplayMemberBinding="{Binding MONAN.TenMon}"></GridViewColumn>
+                                                            <GridViewColumn Header="Số lượng" DisplayMemberBinding="{Binding SoLuong}"></GridViewColumn>
+                                                            <GridViewColumn Header="Đơn giá" DisplayMemberBinding="{Binding MONAN.DonGia,StringFormat= {} {0:N0} VNĐ}"></GridViewColumn>
+                                                            <GridViewColumn Header="Thành tiền" DisplayMemberBinding="{Binding ThanhTien,StringFormat= {} {0:N0} VNĐ}" ></GridViewColumn>
+                                                            <GridView.ColumnHeaderContainerStyle>
+                                                                <Style TargetType="GridViewColumnHeader">
+                                                                    <Setter Property="BorderThickness" Value="2"></Setter>
+                                                                    <Setter Property="Padding" Value="5"></Setter>
+                                                                    <Setter Property="BorderBrush" Value="Green"></Setter>
+                                                                    <Setter Property="Height" Value="30"></Setter>
+                                                                    <Setter Property="Foreground" Value="White"></Setter>
+                                                                    <Setter Property="Width" Value="110"></Setter>
+                                                                    <Setter Property="Background">
+                                                                        <Setter.Value>
+                                                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                                <GradientStop Color="Blue" />
+                                                                            </LinearGradientBrush>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Style>
+                                                            </GridView.ColumnHeaderContainerStyle>
+                                                        </GridView>
+                                                    </ListView.View>
+                                                </ListView>
+                                            </ScrollViewer>
+                                        </Grid>
+                                        <Grid Grid.Column="1">
+                                            <TextBox Foreground="Blue" FontSize="15" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic" Name="Tien" Text="{Binding Tien}" materialDesign:HintAssist.Hint="Mời nhập số tiền khách hàng đưa là: " Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                                                <TextBlock Foreground="Blue" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic" Height="35" Text="{Binding TongTien, StringFormat=Tổng tiền là:  {0:N0} VNĐ}" ></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                                <Button Command="{Binding DeleteCommand}" Content="Thanh toán" Margin="5" Width="120"  ></Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
+                </TabItem>
+                <!--Quản lý nhân viên-->
+                <TabItem Header="Quản lý nhân viên">
+                    <materialDesign:Card VerticalAlignment="Top">
+                        <Grid VerticalAlignment="Top" Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Margin="10 10 10 10" Text="Xử lí danh sách nhân viên" Grid.Column="0" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                        <TextBlock Margin="10 10 10 10" Text="Danh sách nhân viên" Grid.Column="1" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                            <materialDesign:Card Grid.Row="1" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0" VerticalAlignment="Top">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" Margin="10 10 10 10">
+                                            <TextBox materialDesign:HintAssist.Hint="Họ tên nhân viên" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="1" Margin="10 10 10 10">
+                                            <TextBox materialDesign:HintAssist.Hint="Tên đăng nhập" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="2" Margin="10 10 10 10">
+                                            <TextBox materialDesign:HintAssist.Hint="Mật khẩu" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="3" Margin="10 10 10 10" >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <RadioButton HorizontalAlignment="Center"   Grid.Column="0"  Content="Android"></RadioButton>
+                                            <RadioButton HorizontalAlignment="Center"   Grid.Column="1"  Content="PC"></RadioButton>
+                                        </Grid>
+                                        <Grid Grid.Row="4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" Margin="5 5 5 5 ">
+                                                <Button HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="110" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton" Content="Thêm"></Button>
+                                            </Grid>
+                                            <Grid Grid.Column="1" Margin="5 5 5 5 ">
+                                                <Button HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="110" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton" Content="Sửa"></Button>
+                                            </Grid>
+                                            <Grid Grid.Column="2" Margin="5 5 5 5 ">
+                                                <Button HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="110" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton" Content="Xóa"></Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="650">
+                                            <ListView ItemsSource="{Binding NHANVIEN}" HorizontalAlignment="Center">
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridViewColumn Header="Mã nhân viên" DisplayMemberBinding="{Binding MaNV}"></GridViewColumn>
+                                                        <GridViewColumn Header="Tên nhân viên" DisplayMemberBinding="{Binding HoTenNV}"></GridViewColumn>
+                                                        <GridViewColumn  Header="Tên đăng nhập" DisplayMemberBinding="{Binding TenDN}"></GridViewColumn>
+                                                        <GridViewColumn Header="Mật khẩu" DisplayMemberBinding="{Binding MatKhau}"></GridViewColumn>
+                                                        <GridViewColumn Header="Hệ thống" DisplayMemberBinding="{Binding HeThong}"></GridViewColumn>
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
+                </TabItem>
+                <!--Quản lí danh sách bàn-->
+                <TabItem Header="Quản lý danh sách bàn">
+                    <materialDesign:Card VerticalAlignment="Top">
+                        <Grid VerticalAlignment="Top" Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Margin="10 10 10 10" Text="Xử lí danh sách bàn" Grid.Column="0" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                        <TextBlock Margin="10 10 10 10" Text="Danh sách bàn" Grid.Column="1" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                            <materialDesign:Card Grid.Row="1" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0" Height="250" VerticalAlignment="Top">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" Margin="10 10 10 10">
+                                            <TextBox materialDesign:HintAssist.Hint="Tên bàn" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="1" Margin="10 10 10 10">
+                                            <TextBox materialDesign:HintAssist.Hint="Tình trạng bàn" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" Margin="5 5 5 5 ">
+                                                <Button HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="110" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton" Content="Thêm"></Button>
+                                            </Grid>
+                                            <Grid Grid.Column="1" Margin="5 5 5 5 ">
+                                                <Button HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="110" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton" Content="Sửa"></Button>
+                                            </Grid>
+                                            <Grid Grid.Column="2" Margin="5 5 5 5 ">
+                                                <Button HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="110" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton" Content="Xóa"></Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="650">
+                                            <ListView ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding DANHSACHBAN}" HorizontalAlignment="Center">
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridViewColumn Header="Mã bàn" DisplayMemberBinding="{Binding MaBan}"></GridViewColumn>
+                                                        <GridViewColumn Header="Tên bàn" DisplayMemberBinding="{Binding TenBan}"></GridViewColumn>
+                                                        <GridViewColumn  Header="Tình trạng" DisplayMemberBinding="{Binding TrangThai}"></GridViewColumn>
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
+                </TabItem>
+                <!--Quản lý danh sách món ăn-->
+                <TabItem Header="Quản lý danh sách món ăn">
+                    <materialDesign:Card VerticalAlignment="Top">
+                        <Grid VerticalAlignment="Top" Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Margin="10 10 10 10" Text="Xử lí danh sách món ăn" Grid.Column="0" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                        <TextBlock Margin="10 10 10 10" Text="Danh sách món ăn" Grid.Column="1" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                            <materialDesign:Card Grid.Row="1" VerticalAlignment="Top">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0" VerticalAlignment="Top">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" Margin="10 10 10 10">
+                                            <TextBox materialDesign:HintAssist.Hint="Tên món ăn" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="1" Margin="10 10 10 10">
+
+                                        </Grid>
+                                        <Grid Grid.Row="2">
+                                            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="100" HorizontalAlignment="Left" >
+                                                <ListView ItemsSource="{Binding LOAIMON}" Width="650">
+                                                    <ListView.View>
+                                                        <GridView>
+                                                            <GridViewColumn Header="Tên loại món ăn" DisplayMemberBinding="{Binding TenLoaiMon}"></GridViewColumn>
+                                                        </GridView>
+                                                    </ListView.View>
+                                                </ListView>
+                                            </ScrollViewer>
+                                        </Grid>
+                                        <Grid Grid.Row="3" Margin="10 10 10 10">
+                                            <TextBox materialDesign:HintAssist.Hint="Đơn giá" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" Margin="5 5 5 5 ">
+                                                <Button HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="110" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton" Content="Thêm"></Button>
+                                            </Grid>
+                                            <Grid Grid.Column="1" Margin="5 5 5 5 ">
+                                                <Button HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="110" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton" Content="Sửa"></Button>
+                                            </Grid>
+                                            <Grid Grid.Column="2" Margin="5 5 5 5 ">
+                                                <Button HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="110" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton" Content="Xóa"></Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="650">
+                                            <ListView ItemsSource="{Binding MONAN1}" >
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridViewColumn Header="Tên món" DisplayMemberBinding="{Binding TenMon}"></GridViewColumn>
+                                                        <GridViewColumn Header="Hình minh họa">
+                                                            <GridViewColumn.CellTemplate>
+                                                                <DataTemplate>
+                                                                    <Image Source="{Binding HinhAnh}" Height="100" Width="100"/>
+                                                                </DataTemplate>
+                                                            </GridViewColumn.CellTemplate>
+                                                        </GridViewColumn>
+                                                        <GridViewColumn Header="Loại món" DisplayMemberBinding="{Binding LOAIMON.TenLoaiMon}"></GridViewColumn>
+                                                        <GridViewColumn Header="Đơn giá" DisplayMemberBinding="{Binding DonGia}"></GridViewColumn>
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
+                </TabItem>
+                <!--Quản lý loại món ăn-->
+                <TabItem Header="Quản lý danh sách loại món ăn">
+                    <materialDesign:Card VerticalAlignment="Top">
+                        <Grid VerticalAlignment="Top" Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Margin="10 10 10 10" Text="Xử lí danh sách loại món ăn" Grid.Column="0" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                        <TextBlock Margin="10 10 10 10" Text="Danh sách loại món ăn" Grid.Column="1" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                            <materialDesign:Card Grid.Row="1" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0" VerticalAlignment="Top">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" Margin="10 10 10 10">
+                                            <TextBox materialDesign:HintAssist.Hint="Tên loại món ăn" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" Margin="5 5 5 5 ">
+                                                <Button HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="110" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton" Content="Thêm"></Button>
+                                            </Grid>
+                                            <Grid Grid.Column="1" Margin="5 5 5 5 ">
+                                                <Button HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="110" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton" Content="Sửa"></Button>
+                                            </Grid>
+                                            <Grid Grid.Column="2" Margin="5 5 5 5 ">
+                                                <Button HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="110" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton" Content="Xóa"></Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="650">
+                                            <ListView ItemsSource="{Binding LOAIMON}" HorizontalAlignment="Center">
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridViewColumn Header="Mã loại món ăn" DisplayMemberBinding="{Binding MaLoaiMon}"></GridViewColumn>
+                                                        <GridViewColumn Header="Tên loại món ăn" DisplayMemberBinding="{Binding TenLoaiMon}"></GridViewColumn>
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
+                </TabItem>
+                <TabItem Header="Quản lý thống kê doanh thu">
+                    <materialDesign:Card VerticalAlignment="Top">
+                        <Grid VerticalAlignment="Top" Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Margin="10 10 10 10" Text="Xử lí danh sách thống kê doanh thu" Grid.Column="0" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                        <TextBlock Margin="10 10 10 10" Text="Danh sách thống kê doanh thu" Grid.Column="1" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Segoe UI Black" FontWeight="Bold" FontStyle="Italic"  />
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                            <materialDesign:Card Grid.Row="1" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0" VerticalAlignment="Top">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid  Grid.Row="0" Margin="20 20 20 20">
+                                            <DatePicker materialDesign:HintAssist.Hint="Lựa chọn ngày cần thống kê doanh thu" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDate="{Binding NgayThongKeDoanhThu,StringFormat='{}{0:dd.MM.yyyy}'}"/>
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" Margin="5 5 5 5 ">
+                                                <Button Command="{Binding TimKiem}" HorizontalAlignment="Center" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="110" Background="Blue" ToolTip="Resource name: MaterialDesignRaisedButton" Content="Tìm kiếm"></Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="650">
+                                            <ListView ItemsSource="{Binding thongkedoanhthu}" HorizontalAlignment="Center">
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridViewColumn Header="Mã doanh thu" DisplayMemberBinding="{Binding MaTKDT}"></GridViewColumn>
+                                                        <GridViewColumn Header="Ngày thống kê doanh thu" DisplayMemberBinding="{Binding NgayThanhToan,StringFormat={} {0:'Ngày ' dd 'tháng 'MM' năm 'yyyy}}"></GridViewColumn>
+                                                        <GridViewColumn Header="Tổng tiền doanh thu" DisplayMemberBinding="{Binding TongTien,StringFormat= {} {0:N0} VNĐ}"></GridViewColumn>
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
+                </TabItem>
+            </dragablz:TabablzControl>
+        </Grid>
+    </Grid>
+</Window>
+    
