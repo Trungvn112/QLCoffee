@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroud11">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            tools:ignore="MissingConstraints">
+
+            <Button
+                android:text="Sửa"
+                android:id="@+id/btn_suamon"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/button_backgroud"
+                android:textColor="#FFFFFF"
+                android:layout_alignParentRight="true"/>
+
+            <EditText
+                android:id="@+id/edit_soluong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="Vui lòng nhập số lượng"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtdanhsachban"
+            android:text="Mời lựa chọn bàn"
+            android:textSize="25dp"
+            android:background="#34495e"
+            android:textColor="#FFFFFF"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:drawableLeft="@drawable/list"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ListView
+            android:id="@+id/list_danhsachban"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:listSelector="#dfe6e9"
+            android:divider="#000000"
+            android:dividerHeight="1dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtdanhsachthucdon"
+            android:text="Danh sách món ăn"
+            android:textSize="25dp"
+            android:background="#34495e"
+            android:textColor="#FFFFFF"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:drawableLeft="@drawable/list"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#34495e">
+
+            <TextView
+                android:id="@+id/txtmamon"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="Mã món"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                />
+
+            <TextView
+                android:id="@+id/txttenmon"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:text="| Tên món"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                />
+
+            <TextView
+                android:layout_width="65dp"
+                android:layout_height="30dp"
+                android:id="@+id/txtsoluong"
+                android:text="| Số lượng"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:inputType="numberDecimal"
+                />
+
+            <TextView
+                android:id="@+id/txtdongia"
+                android:layout_width="85dp"
+                android:layout_height="30dp"
+                android:text="| Đơn giá"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:id="@+id/txtthanhtien"
+                android:text="| Thành tiền"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+               />
+        </LinearLayout>
+
+
+        <ListView
+            android:id="@+id/list_danhsachthucdon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:listSelector="#dfe6e9"
+            android:divider="#000000"
+            android:dividerHeight="1dp"
+            android:background="#FFFFFF"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
